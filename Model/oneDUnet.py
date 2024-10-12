@@ -56,7 +56,6 @@ class DecoderBlock(nn.Module):
         super().__init__(*args, **kwargs)
         self.conv1 = nn.Conv1d(2 * in_channels, in_channels, 3, padding=1)
         self.conv2 = nn.Conv1d(in_channels, in_channels, 3, padding=1)
-        # 定义1D转置卷积层
         self.UpConv = nn.ConvTranspose1d(
             in_channels=in_channels,
             out_channels=out_channels,
