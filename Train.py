@@ -27,13 +27,10 @@ def Train(device, model, optimizer, dataset, num_steps, num_epoch,batch_size,max
     one_minus_alphas_bar_sqrt = GetPre.Get_one_minus_alphas_bar_sqrt(Betas).to(device)
 
     trainLoss = []
-    # 初始化最低损失为一个较大的值
     min_loss = float('inf')
     for t in range(num_epoch):
         model.train()
-        # 使用余弦退火公式计算学习率
         lr = min_lr + 0.5 * (max_lr - min_lr) * (1 + math.cos(t / num_epoch * math.pi))
-        # 设置优化器的学习率
         for param_group in optimizer.param_groups:
             param_group['lr'] = lr
         loss = 0
@@ -46,9 +43,7 @@ def Train(device, model, optimizer, dataset, num_steps, num_epoch,batch_size,max
         print("epoch:{}, Loss:{}".format(t + 1, loss))
         trainLoss.append(loss)
         if loss < min_loss:
-            # 更新最低损失
             min_loss = loss
-            # 保存模型参数
             torch.save(model.state_dict(), pth_filepath)
 
         if (t + 1) % 100 == 0:
