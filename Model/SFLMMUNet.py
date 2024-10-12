@@ -78,7 +78,7 @@ class Decoder(nn.Module):
         return x4
 
 
-class FiLM_UNet(nn.Module):
+class SFLMM_UNet(nn.Module):
     def __init__(self, n_Steps=1000, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -102,32 +102,3 @@ class FiLM_UNet(nn.Module):
         return self.Lastout(out)
 
 
-if __name__ == '__main__':
-    # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    #
-    # a = FiLM_UNet().to(device)
-    # input_data = torch.randn((64, 1, 1024)).to(device)
-    # # 对一个batch生成随机覆盖更多得t
-    # device = input_data.device
-    # batch_size = input_data.shape[0]
-    # t = torch.randint(0, 1000, (batch_size // 2,)).to(device)
-    # t = torch.cat([t, 1000 - 1 - t], dim=0).to(device)
-    # # print(t.device)
-    # # print(input_data.device)
-    #
-    # output_data = a(input_data, t)
-    #
-    # # 打印输出数据的形状
-    # print("Input shape:", input_data.shape)
-    # print("Output shape:", output_data.shape)
-
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    a = FiLM_UNet(n_Steps=1000).to(device)
-    input_data = torch.randn((64, 1, 2048)).to(device)
-    batch_size = input_data.shape[0]
-    t = torch.randint(0, 1000, (batch_size // 2,)).to(device)
-    t = torch.cat([t, 1000 - 1 - t], dim=0).to(device)
-    output_data = a(input_data, t)
-    # 打印输出数据的形状
-    print("Input shape:", input_data.shape)
-    print("Output shape:", output_data.shape)
